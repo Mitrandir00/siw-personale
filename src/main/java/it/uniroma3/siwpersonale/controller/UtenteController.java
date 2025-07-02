@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,6 +23,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -153,6 +155,44 @@ public class UtenteController {
         }
         this.utenteService.addUtente(utente);
         return "redirect:/utente/" + utente.getId();
+    }
+
+    @GetMapping("/impostazioni")
+    public String getImpostazioniProfilo(Model model, @AuthenticationPrincipal Utente utente) {
+        model.addAttribute("utente", utente);
+        model.addAttribute("ruoli", Utente.Ruolo.values());
+        return "Impostazioni";
+    }
+
+    @PostMapping("/utente/modifica")
+    public String modificaProfilo(@ModelAttribute("utente") Utente modificato,
+            @AuthenticationPrincipal Utente utenteLoggato,
+            Model model) {
+
+        utenteLoggato.setNome(modificato.getNome());
+        utenteLoggato.setEmail(modificato.getEmail());
+        utenteLoggato.setRuolo(modificato.getRuolo());
+
+        if (modificato.getPassword() != null && !modificato.getPassword().isBlank()) {
+            if (modificato.getPassword().equals(modificato.getPasswordBis())) {
+                utenteLoggato.setPassword(passwordEncoder.encode(modificato.getPassword()));
+            } else {
+                model.addAttribute("errore", "Le password non coincidono");
+                model.addAttribute("utente", utenteLoggato);
+                model.addAttribute("ruoli", Utente.Ruolo.values());
+                return "Impostazioni";
+            }
+        }
+
+        utenteService.addUtente(utenteLoggato);
+        return "redirect:/impostazioni?successo";
+    }
+
+    @PostMapping("/utente/cancella")
+    public String cancellaProfilo(@AuthenticationPrincipal Utente utente, HttpServletRequest request) {
+        utenteService.cancellaUtente(utente.getId());
+        request.getSession().invalidate();
+        return "redirect:/login?deleted";
     }
 
 }

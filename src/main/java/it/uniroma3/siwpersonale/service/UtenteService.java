@@ -37,7 +37,7 @@ public class UtenteService {
     }
 
     // Cancella un utente (solo admin)
-    public void cancellaUtente(Long id, Utente utenteCheRichiede) {
+    public void cancellaUtente(Long id) {
         utenteRepository.deleteById(id);
     }
 

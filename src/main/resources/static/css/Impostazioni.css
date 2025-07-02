@@ -1,0 +1,90 @@
+body {
+    font-family: sans-serif;
+    background-image: url("/uploads/images/SfondoLogin.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 40vw;
+    margin: 5vw auto;
+    padding: 2vw;
+    background-color: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(1vw);
+    border-radius: 2vw;
+    box-shadow: 0 0.5vw 2vw rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 2vw;
+    color: #333;
+    font-size: 2vw;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2vw;
+}
+
+label {
+    font-weight: bold;
+    color: #333;
+    font-size: 1vw;
+}
+
+input, select {
+    padding: 0.8vw;
+    border: 0.1vw solid #ccc;
+    border-radius: 1vw;
+    background-color: rgba(255, 255, 255, 0.7);
+    font-size: 1vw;
+    transition: box-shadow 0.3s;
+}
+
+input:focus, select:focus {
+    box-shadow: 0 0 0.5vw #aaa;
+    outline: none;
+}
+
+button[type="submit"] {
+    padding: 1vw;
+    background-color: #eda548;
+    color: white;
+    border: none;
+    border-radius: 1.5vw;
+    font-size: 1vw;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #ce892d;
+}
+
+.btn-danger {
+    background-color: #d9534f;
+    color: white;
+    padding: 1vw;
+    border: none;
+    border-radius: 1.5vw;
+    font-size: 1vw;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-danger:hover {
+    background-color: #b52a27;
+}
+
+hr {
+    margin: 3vw 0;
+    border: none;
+    border-top: 0.1vw solid #ccc;
+}

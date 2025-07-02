@@ -93,3 +93,25 @@ label {
 .ospite > button[type="submit"]:hover {
     background-color: #b87400;
 }
+
+.login-google {
+    text-align: center;
+    margin-top: 1.5vw;
+}
+
+.btn-google {
+    width: 100%;
+    padding: 0.8vw 1vw;
+    border: none;
+    border-radius: 1vw;
+    background-color: #4285F4;
+    color: white;
+    font-size: 1.2vw;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-google:hover {
+    background-color: #3367d6;
+}

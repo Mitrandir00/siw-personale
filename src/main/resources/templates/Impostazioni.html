@@ -1,31 +1,56 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
 
-    <head>
-        <title>Impostazioni</title>
-         <link rel="stylesheet" th:href="@{/css/Registrazione.css}"/>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <title>Modifica Profilo</title>
+    <link rel="stylesheet" th:href="@{/css/Impostazioni.css}">
+</head>
 
-    <body>
-        <h2>IMPOSTAZIONI</h2>
-        <form th:action="@{/impostazioni/{utente}(utente=${utente.id})}" method="post" class="form-registrazione">
+<body>
+    <div class="container">
+        <h2>Modifica il tuo profilo</h2>
 
-            <label for="nomeUtente">Nome utente:</label>
-            <input type="text" id="nomeUtente" name="nomeUtente" th:value="${utente.nomeUtente}" required class="input-stile"><br><br>
+        <form th:action="@{/utente/modifica}" th:object="${utente}" method="post">
+            <input type="hidden" th:field="*{id}" />
 
             <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" th:value="${utente.nome}" required class="input-stile"><br><br>
+            <input type="text" id="nome" th:field="*{nome}" required>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" th:value="${utente.password}" required class="input-stile"><br><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" th:field="*{email}" required>
+
+            <label for="password">Nuova Password:</label>
+            <input type="password" id="password" th:field="*{password}">
 
             <label for="passwordBis">Conferma Password:</label>
-            <input type="password" id="passwordBis" name="passwordBis" required class="input-stile"><br><br>
+            <input type="password" id="passwordBis" th:field="*{passwordBis}">
 
-            <label for="codiceAmministratore">Codice Amministratore (se non lo hai puoi lasciare in bianco):</label>
-            <input type="text" id="codiceAmministratore" name="codiceAmministratore" class="input-stile"><br><br>
+            <label for="ruolo">Ruolo:</label>
+            <select id="ruolo" th:field="*{ruolo}">
+                <option th:value="UTENTE" th:text="'Utente'"
+                    th:selected="${utente.ruolo == T(it.uniroma3.siwpersonale.model.Utente.Ruolo).UTENTE}"></option>
+                <option th:value="STAFF" th:text="'Staff'"
+                    th:selected="${utente.ruolo == T(it.uniroma3.siwpersonale.model.Utente.Ruolo).STAFF}"></option>
+            </select>
 
-            <button type="submit" class="btn-invio">Registrati</button>
+            <button type="submit">Salva Modifiche</button>
         </form>
-    </body>
+
+        <hr>
+
+        <form th:action="@{/utente/cancella}" method="post"
+            onsubmit="return confirm('Sei sicuro di voler cancellare il tuo account? L\'operazione è irreversibile.')">
+            <button type="submit" class="btn-danger">Elimina Account</button>
+        </form>
+
+        <div th:if="${errore}" style="color:red; margin-top: 1vw">
+            <p th:text="${errore}"></p>
+        </div>
+        <div th:if="${successo}" style="color:green; margin-top: 1vw">
+            <p th:text="${successo}"></p>
+        </div>
+    </div>
+</body>
+
 </html>

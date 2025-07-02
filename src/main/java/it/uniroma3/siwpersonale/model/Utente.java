@@ -19,6 +19,7 @@ import jakarta.persistence.Transient;
 @Entity
 public class Utente {
 
+    public static final Ruolo DEFAULT_ROLE = Utente.Ruolo.UTENTE;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -40,6 +41,7 @@ public class Utente {
     }
 
     public Utente() {
+        this.ruolo = Ruolo.UTENTE;  // assegna sempre UTENTE come default
     }
 
     public void setId(Long id) {
