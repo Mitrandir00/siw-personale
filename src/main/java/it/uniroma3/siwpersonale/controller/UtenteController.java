@@ -184,30 +184,60 @@ public class UtenteController {
 
     @PostMapping("/utente/modifica")
     public String modificaProfilo(@ModelAttribute("utente") Utente modificato,
-            @AuthenticationPrincipal Utente utenteLoggato,
             Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Utente utenteLoggato = null;
+
+        if (authentication != null && authentication.isAuthenticated() &&
+                !(authentication.getPrincipal() instanceof String
+                        && authentication.getPrincipal().equals("anonymousUser"))) {
+
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String usernameOrEmail = userDetails.getUsername();
+
+            // Provo prima con email
+            utenteLoggato = utenteService.getUtenteByEmail(usernameOrEmail);
+
+            // Se null, provo con nome
+            if (utenteLoggato == null) {
+                utenteLoggato = utenteService.getUtenteByNome(usernameOrEmail);
+            }
+        }
 
         utenteLoggato.setNome(modificato.getNome());
         utenteLoggato.setEmail(modificato.getEmail());
         utenteLoggato.setRuolo(modificato.getRuolo());
-
-        if (modificato.getPassword() != null && !modificato.getPassword().isBlank()) {
-            if (modificato.getPassword().equals(modificato.getPasswordBis())) {
-                utenteLoggato.setPassword(passwordEncoder.encode(modificato.getPassword()));
-            } else {
-                model.addAttribute("errore", "Le password non coincidono");
-                model.addAttribute("utente", utenteLoggato);
-                model.addAttribute("ruoli", Utente.Ruolo.values());
-                return "Impostazioni";
-            }
+        if (!modificato.getPassword().equals(modificato.getPasswordBis())) {
+            model.addAttribute("errore", "La conferma Password non combacia con la Password inserita");
+            return "Impostazioni";
         }
+        utenteLoggato.setPassword(modificato.getPassword());
+        utenteLoggato.setPasswordBis(modificato.getPasswordBis());
 
         utenteService.addUtente(utenteLoggato);
-        return "redirect:/impostazioni?successo";
+        return "Utente";
     }
 
     @PostMapping("/utente/cancella")
-    public String cancellaProfilo(@AuthenticationPrincipal Utente utente, HttpServletRequest request) {
+    public String cancellaProfilo(@AuthenticationPrincipal Utente utentebis, HttpServletRequest request) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Utente utente = null;
+
+        if (authentication != null && authentication.isAuthenticated() &&
+                !(authentication.getPrincipal() instanceof String
+                        && authentication.getPrincipal().equals("anonymousUser"))) {
+
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String usernameOrEmail = userDetails.getUsername();
+
+            // Provo prima con email
+            utente = utenteService.getUtenteByEmail(usernameOrEmail);
+
+            // Se null, provo con nome
+            if (utente == null) {
+                utente = utenteService.getUtenteByNome(usernameOrEmail);
+            }
+        }
         utenteService.cancellaUtente(utente.getId());
         request.getSession().invalidate();
         return "redirect:/login?deleted";

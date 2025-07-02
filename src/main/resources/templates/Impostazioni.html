@@ -13,6 +13,8 @@
 
         <form th:action="@{/utente/modifica}" th:object="${utente}" method="post">
             <input type="hidden" th:field="*{id}" />
+            <input type="hidden" th:field="*{libriLetti}" />
+            <input type="hidden" th:field="*{recensioni}" />
 
             <label for="nome">Nome:</label>
             <input type="text" id="nome" th:field="*{nome}" required>
@@ -22,15 +24,15 @@
 
             <label for="password">Nuova Password:</label>
             <input type="password" id="password" th:field="*{password}"
-                placeholder="Lascia vuoto se non vuoi cambiarla">
+                placeholder="Lascia vuoto se non vuoi cambiarla"required>
 
             <label for="passwordBis">Conferma Password:</label>
-            <input type="password" id="passwordBis" th:field="*{passwordBis}">
+            <input type="password" id="passwordBis" th:field="*{passwordBis}"required>
 
-            <!--<label for="ruolo">Ruolo:</label>
+            <label for="ruolo">Ruolo:</label>
             <select id="ruolo" th:field="*{ruolo}">
                 <option th:each="r : ${ruoli}" th:value="${r}" th:text="${r}"></option>
-            </select>-->
+            </select>
 
             <button type="submit">Salva Modifiche</button>
             <a th:href="@{/utente}" class="button-annulla">Annulla</a>
