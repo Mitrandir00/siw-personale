@@ -84,11 +84,11 @@ insert into libro_url_Image (libro_id, url_Image) values(21, 'images/copertinaCi
 insert into libro_url_Image (libro_id, url_Image) values(22, 'images/copertinaDelittoECastigo.jpg');
 insert into libro_url_Image (libro_id, url_Image) values(23, 'images/copertinaFratelliKaramazov.jpg');
 insert into libro_url_Image (libro_id, url_Image) values(24, 'images/copertinaRicordiDalSottosuolo.jpg');
-insert into libro_url_Image (libro_id, url_Image) values(25, 'images/copertinaCampioneDelleEre.jpg');
-insert into libro_url_Image (libro_id, url_Image) values(26, 'images/copertinaPozzoDellAscensione.jpg');
+insert into libro_url_Image (libro_id, url_Image) values(25, 'images/copertinaPozzoDellAscensione.jpg');
+insert into libro_url_Image (libro_id, url_Image) values(26, 'images/copertinaCampioneDelleEre.jpg');
 insert into libro_url_Image (libro_id, url_Image) values(27, 'images/copertinaParoleDiLuce.jpg');
-insert into libro_url_Image (libro_id, url_Image) values(28, 'images/copertinaIntermittenzeDellaMorte.jpg');
-insert into libro_url_Image (libro_id, url_Image) values(29, 'images/copertinaCecita.jpg');
+insert into libro_url_Image (libro_id, url_Image) values(28, 'images/copertinaCecita.jpg');
+insert into libro_url_Image (libro_id, url_Image) values(29, 'images/copertinaIntermittenzeDellaMorte.jpg');
 insert into libro_url_Image (libro_id, url_Image) values(30, 'images/copertinaRaccontoDellIsolaSconosciuta.jpg');
 insert into libro_url_Image (libro_id, url_Image) values(31, 'images/copertinaRaccontoDellAncella.gif');
 insert into libro_url_Image (libro_id, url_Image) values(32, 'images/copertinaUltimoDegliUomini.jpg');
