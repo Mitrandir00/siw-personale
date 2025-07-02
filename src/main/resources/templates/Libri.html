@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Catalogo Libri</title>
+    <link rel="stylesheet" th:href="@{/css/Libri.css}" />
+</head>
+
+<body>
+
+    <div th:replace="~{fragments/fasciaLog :: fasciaLog}"></div>
+
+    <form id="search-form" th:action="@{/libri}" method="get" class="search-container" onsubmit="return submitSearch()">
+        <input type="text" id="search-bar" name="query" class="search-bar" placeholder="Cerca libri..." />
+    </form>
+
+     <script th:src="@{/js/Sidebar.js}"></script>
+    <hr>
+
+    <h1>Libri</h1>
+
+    <div class="container1">
+        <ul>
+            <li th:each="libro : ${libri}">
+                <div>
+                    <a th:href="@{/libro/{id}(id=${libro.id})}">
+                        <img th:if="${libro.urlImage != null and !#lists.isEmpty(libro.urlImage)}"
+                            th:src="@{'/uploads/' + ${libro.urlImage[0]}}" alt="Copertina libro" />
+                    </a>
+                </div>
+
+                <a th:href="@{/libro/{id}(id=${libro.id})}" th:text="${libro.titolo}">titolo</a>
+            </li>
+        </ul>
+
+        <div th:if="${libri == null or #lists.isEmpty(libri)}">
+            Non ci sono libri nel sistema
+        </div>
+    </div>
+
+</body>
+
+</html>

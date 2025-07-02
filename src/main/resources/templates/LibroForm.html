@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${libro.id != null} ? 'Modifica Libro' : 'Crea Libro'">Libro</title>
+    <link rel="stylesheet" th:href="@{/css/LibroForm.css}">
+</head>
+
+<body>
+
+    <h1 th:text="${libro.id != null} ? 'Modifica Libro' : 'Nuovo Libro'"></h1>
+
+    <form th:action="@{/libro/salva}" th:object="${libro}" method="post" enctype="multipart/form-data"
+        class="form-registrazione">
+
+        <label for="titolo">Titolo:</label>
+        <input type="text" id="titolo" th:field="*{titolo}" required class="input-stile">
+        <div th:if="${#fields.hasErrors('titolo')}" th:errors="*{titolo}" style="color:red"></div>
+
+        <label for="data">Anno di pubblicazione:</label>
+        <input type="date" name="data" th:value="${#temporals.format(libro.data, 'yyyy-MM-dd')}" />
+        <div th:if="${#fields.hasErrors('data')}" th:errors="*{data}" style="color:red"></div>
+
+        <label for="trama">Trama:</label>
+        <textarea id="trama" th:field="*{trama}" required class="input-stile"></textarea>
+        <div th:if="${#fields.hasErrors('trama')}" th:errors="*{trama}" style="color:red"></div>
+
+        <label for="immagini">Immagini copertina:</label>
+        <input type="file" id="immagini" name="immagini" accept="image/*" multiple class="input-stile">
+        <div th:if="${#fields.hasErrors('urlImage')}" th:errors="*{urlImage}" style="color:red"></div>
+
+        <!-- Mostra immagini già caricate -->
+        <div class="copertine-container" th:if="${libro.urlImage != null}">
+            <span th:each="img : ${libro.urlImage}" class="copertine">
+                <img th:src="@{'/uploads/' + ${img}}" alt="Copertina libro" />
+            </span>
+        </div>
+
+        <label for="autoriIds">Autori:</label>
+        <select id="autoriids" name="autoriIds" multiple size="5" required>
+            <option th:each="a : ${autori}" th:value="${a.id}" th:text="${a.nome + ' ' + a.cognome}"></option>
+        </select>
+        <div th:if="${erroreAutori}" style="color:red">
+            <p th:text="${erroreAutori}"></p>
+        </div>
+
+
+
+        <!-- ID e urlImage per modifica -->
+        <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{urlImage}" />
+
+        <div class="salvaAnnulla">
+            <button type="submit">Salva Libro</button>
+            <a th:href="@{/libri}" class="button-annulla">Annulla</a>
+        </div>
+
+    </form>
+
+    <!-- Mostra il pulsante elimina solo se è una modifica -->
+    <div th:if="${libro.id != null}">
+        <form th:action="@{'/libroCancella/' + ${libro.id}}" method="post"
+            onsubmit="return confirm('Sei sicuro di voler eliminare questo libro?');" class="form-elimina">
+            <button type="submit" class="btn-elimina">Elimina Libro</button>
+        </form>
+    </div>
+
+
+
+    <div th:if="${errore}" style="color:red;">
+        <p th:text="${errore}"></p>
+    </div>
+
+</body>
+
+</html>

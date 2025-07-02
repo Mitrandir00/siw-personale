@@ -1,0 +1,635 @@
+.fascia {
+  display: flex;
+
+
+  position: fixed;
+  /* barra fissa */
+  top: 0;
+  /* in cima */
+  left: 0;
+  right: 0;
+  height: 4vw;
+  /* altezza barra */
+  background-color: #ffffff;
+  /* sfondo scuro  */
+  color: white;
+  /* testo bianco */
+  padding: 0;
+  /* padding orizzontale */
+  z-index: 11;
+  /* sopra altri elementi */
+  box-sizing: border-box;
+}
+
+.staff {
+  display: inline-block;
+  padding: 0.3vw 0.8vw;
+  border: solid #eda548;
+  /* o un colore che si adatti al tuo tema */
+  border-radius: 0.5vw;
+  background-color: rgba(255, 255, 255, 0.1);
+  /* leggermente trasparente */
+  color: #eda548;
+  font-weight: bold;
+  font-size: 1vw;
+}
+
+.nav-right {
+  position: absolute;
+  right: 2vw;
+}
+
+.nav-right>a,
+.staff>a {
+  font-size: 1.5vw;
+}
+
+.nav-right>a,
+.nav-right>img,
+.staff>a {
+  display: flex;
+
+  align-items: center;
+  padding: 0.3vw;
+  margin-left: 6vw;
+  /* distanza tra elementi */
+  border-radius: 8px;
+  /* angoli arrotondati */
+  background-color: transparent;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  user-select: none;
+}
+
+.nav-right>*:first-child a,
+.nav-right>a:first-child {
+  margin-left: 0 !important;
+}
+
+
+/* Hover: inverti colori */
+.nav-right>a:hover,
+.nav-right>img:hover,
+.staff>a:hover {
+  background-color: white;
+  color: #eda548;
+}
+
+
+/* Per evitare che il contenuto della pagina venga nascosto sotto la barra */
+body {
+  padding-top: 60px;
+  background-color: #ffffff;
+  /* stesso valore dell'altezza di .fascia */
+  padding-left: 22vw;
+  padding-right: 22vw;
+  box-sizing: border-box;
+}
+
+.menu-icon {
+  position: absolute;
+  width: 18vw;
+  left: 1.8vw;
+  top: -4vw;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+.menu-icon-profilo {
+  width: 3vw;
+  height: auto;
+}
+
+/* Fascia già fissa in alto come da tuo codice */
+
+.search-icon {
+  width: 2vw;
+  height: 2vw;
+  cursor: pointer;
+}
+
+.search-container {
+  position: fixed;
+  top: 4vw;
+  /* subito sotto la fascia */
+  left: 45vw;
+  /* stesso padding sinistro del body */
+  right: 35vw;
+  /* stesso padding destro del body */
+  padding: 0.35vw 0.7vw;
+  background-color: white;
+  border: 0.2vw solid #ccc;
+  border-radius: 0.3vw;
+  box-sizing: 2vw;
+  font-size: 1vw;
+
+  /* NASCOSTA di base: spostata sopra la fascia */
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 8;
+}
+
+.search-container.active {
+  /* VISIBILE: torna a posizione naturale subito sotto la fascia */
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Stile dell’input vero e proprio */
+.search-container input[type="text"] {
+  width: 100%;
+  padding: 0.35vw 0.7vw;
+  font-size: 1vw;
+  border: 0.2vw solid #ccc;
+  border-radius: 0.3vw;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+
+
+
+.nav-right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Stili comuni a tutte le sidebar */
+[id="sidebar"] {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  /* nascosta */
+  width: 250px;
+  height: 100%;
+  background-color: #eda548;
+  color: rgb(255, 255, 255);
+  padding: 20px;
+  transition: right 0.3s ease;
+  z-index: 2000;
+  /* sopra la barra fascia */
+}
+
+[id="sidebar"].show {
+  right: 0;
+  /* visibile */
+}
+
+[id="sidebar"] a {
+  display: block;
+  margin: 10px 0;
+  color: white;
+  text-decoration: none;
+  font-size: 1.2vw;
+}
+
+[id="sidebar"] button {
+  position: relative;
+  top: 35vw;
+  display: fixed;
+  margin: 10px 0;
+  background-color: #d9534f;
+  color: white;
+  text-decoration: none;
+  border: none;
+  border-radius: 1.2vw;
+  padding: 0.5vw 1.5vw;
+  font-size: 1.2vw;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+[id="sidebar"] button:hover {
+    background-color: #b52b27;
+}
+
+[id="sidebar"] .login {
+  display: inline-block;
+  background-color: #5cb85c; /* verde */
+  color: white;
+  text-decoration: none;
+  border: none;
+  border-radius: 1.1vw;
+  padding: 0.5vw 1.5vw;
+  font-size: 1.2vw;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+[id="sidebar"] .login:hover {
+  background-color: #449d44; /* verde scuro */
+}
+
+
+.libro {
+  position: relative;
+  /* aggiunto */
+  display: flex;
+  align-items: flex-start;
+  gap: 2vw;
+  padding-top: 70px;
+  padding-left: 0;
+  font-size: 1vw;
+}
+
+
+.libro img {
+  border-radius: 10px;
+  width: 18vw;
+  /* dimensione immagine, regola come vuoi */
+  height: 27.8vw;
+  object-fit: cover;
+}
+
+.trama {
+  flex: none;
+  /* non usa più tutto lo spazio rimasto */
+  width: calc(100% - 16vw);
+  /* meno larghezza della tabella + margini */
+  text-align: justify;
+  line-height: 1.4;
+  color: #333;
+  font-size: 1.1vw;
+}
+
+
+.info-libro {
+  font-size: 6vw;
+}
+
+.libro a {
+  font-size: 1.5vw;
+  text-decoration: none;
+  /* niente sottolineatura */
+  color: black;
+  /* colore bianco semitrasparente di base */
+  transition: color 0.3s ease;
+  /* transizione morbida colore */
+}
+
+.nomeecognome:hover {
+  color: #eda548;
+  /* diventano bianchi al passaggio */
+  text-decoration: none;
+  /* conferma niente sottolineatura anche hover */
+  cursor: pointer;
+  /* cambia cursore per indicare click */
+}
+
+.info-titolo h1 {
+  margin: 0;
+  font-size: 2.5vw;
+  line-height: 1.2;
+}
+
+.info-titolo p {
+  margin: 5px 0 0 0;
+}
+
+.bottone {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  /* opzionale, per centrare verticalmente */
+}
+
+.bottone a {
+  position: relative;
+  top: 1.5vw;
+  background-size: contain;
+  font-size: 1.1vw;
+  background-color: rgba(79, 129, 179, 0.8);
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 0.5vw 1vw;
+  border-radius: 0.5vw;
+  /* angoli arrotondati */
+  display: inline-block;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+  /* ombra leggera */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bottone a:hover {
+  background-color: rgba(61, 109, 157, 0.8);
+  /* verde più scuro */
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+  /* ombra più intensa al passaggio */
+}
+
+.tabella {
+  position: absolute;
+  /* resta assoluto, ma ora relativo a .libro */
+  top: 16vw;
+  /* regola se serve */
+  right: 0;
+  /* allinea a destra di .libro */
+  z-index: 10;
+  width: 12vw;
+  min-height: 15vw;
+  margin: 0;
+  padding-top: 1vw;
+  padding-left: 1.5vw;
+  padding-right: 1.5vw;
+  border-radius: 1vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #eda548;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-family: sans-serif;
+  color: white;
+}
+
+
+button img.iconaLibroChiuso {
+  width: 75%;
+  height: auto;
+  display: block;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
+button img.iconaLibroAperto {
+  width: 40%;
+  height: auto;
+  display: block;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Applica lo stile al <button> che contiene l’immagine */
+.tabella button:not(.btn-recensione) {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tabella button.btn-recensione {
+  background-color: white;
+  /* sfondo bianco */
+  color: #eda548;
+  /* testo nero */
+  border: 0px solid #ccc;
+  /* bordo sottile e chiaro */
+  border-radius: 0.4vw;
+  /* angoli leggermente stondati */
+  padding: 0.75vw 1.5vw;
+  /* un po' di padding */
+  font-size: 1.2vw;
+  /* testo in grassetto */
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  /* ombra leggera per effetto rilievo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  /* o specifica larghezza */
+  height: auto;
+}
+
+.tabella button.btn-recensione:hover {
+  background-color: #f0f0f0;
+  /* leggero cambio colore al passaggio */
+  border-color: #999;
+}
+
+
+
+.tabella a {
+  font-size: 1.2vw;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  text-decoration: none;
+  /* niente sottolineatura */
+  color: black;
+  /* colore bianco semitrasparente di base */
+  transition: color 0.3s ease;
+  /* transizione morbida colore */
+}
+
+.tabella a:hover {
+  color: white;
+  /* diventano bianchi al passaggio */
+  text-decoration: none;
+  /* conferma niente sottolineatura anche hover */
+  cursor: pointer;
+  /* cambia cursore per indicare click */
+}
+
+.stelle {
+  display: flex;
+  gap: 5px;
+  font-size: 2vw;
+}
+
+.stella {
+  color: gray;
+  /* stelle vuote */
+}
+
+.stella.piena {
+  color: #edde31;
+  /* stelle piene */
+}
+
+.recensioni {
+  position: relative;
+  margin-top: 5vw;
+  /* più in basso di tabella */
+  padding: 1vw;
+  border-radius: 10px;
+  background-color: rgba(79, 129, 179, 0.2);
+  color: #eda548;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+.recensioni a {
+  text-decoration: none;
+  font-size: 1.6vw;
+}
+
+.recensioni p {
+  font-size: 1vw;
+  margin: 4px 0;
+}
+
+.recensioni .stelle {
+  gap: 0.3vw;
+  font-size: 1.6vw;
+}
+
+.recensioni hr {
+  margin: 16px 0;
+}
+
+.recensione {
+  position: relative;
+  margin-bottom: 1.5vw;
+  padding-right: 3vw;
+  /* spazio per il bottone */
+}
+
+.recensione button {
+  position: absolute;
+  top: 50%;
+  right: 1vw;
+  transform: translateY(-50%);
+  width: 2vw;
+  height: 2vw;
+  background-color: rgba(0, 0, 0, 0.2);
+  /* leggermente scuro e trasparente */
+  border: none;
+  padding: 0;
+  border-radius: 0.4vw;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.recensione button img {
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* Overlay popup - sfondo semi-trasparente coprente tutta la pagina */
+#popupRecensione {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  /* sfondo scuro trasparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+  /* sopra tutto */
+}
+
+/* Contenuto del popup - finestra bianca con ombra e bordi arrotondati */
+#popupRecensione .modal-content {
+  background-color: white;
+  border-radius: 1vw;
+  padding: 2vw 3vw;
+  width: 30vw;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  position: relative;
+  font-family: sans-serif;
+  color: #333;
+  margin: 0;
+}
+
+/* Bottone chiudi in alto a destra, grande e ben visibile */
+#popupRecensione .close-button {
+  position: absolute;
+  top: 1vw;
+  right: 1vw;
+  background: transparent;
+  border: none;
+  font-size: 2.5vw;
+  font-weight: bold;
+  color: #eda548;
+  /* colore tema */
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+#popupRecensione .close-button:hover {
+  color: #b87400;
+}
+
+/* Stile input nel popup (coerente con .input-stile usata) */
+#popupRecensione input.input-stile {
+  width: 100%;
+  padding: 0.7vw 1vw;
+  margin-bottom: 1.5vw;
+  font-size: 1vw;
+  border: 0.1vw solid #eda548;
+  border-radius: 0.5vw;
+  box-sizing: border-box;
+}
+
+#popupRecensione textarea.input-stile5 {
+  width: 100%;
+  padding: 0.7vw 1vw;
+  margin-bottom: 1.5vw;
+  font-size: 1vw;
+  border: 0.1vw solid #eda548;
+  border-radius: 0.5vw;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 8vw;
+  vertical-align: top;
+  overflow-wrap: break-word;
+  /* per andare a capo quando la parola è lunga */
+}
+
+/* Stile bottone invio nel popup (coerente con .btn-invio) */
+#popupRecensione button.btn-invio {
+  background-color: #eda548;
+  color: white;
+  font-weight: 700;
+  padding: 0.8vw 2vw;
+  border: none;
+  border-radius: 0.5vw;
+  cursor: pointer;
+  font-size: 1vw;
+  transition: background-color 0.3s ease;
+}
+
+#popupRecensione button.btn-invio:hover {
+  background-color: #b87400;
+}
+
+.btn-invio {
+  background-color: white;
+  /* sfondo bianco */
+  color: #eda548;
+  /* colore testo giallo/arancione */
+  font-weight: 700;
+  padding: 0.8vw 2vw;
+  border: 0.1vw solid #eda548;
+  /* bordo giallo/arancione */
+  border-radius: 0.5vw;
+  cursor: pointer;
+  font-size: 1vw;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-invio:hover {
+  background-color: #eda548;
+  /* sfondo giallo/arancione */
+  color: white;
+  /* testo bianco */
+}

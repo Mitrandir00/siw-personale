@@ -1,0 +1,42 @@
+<nav class="fascia" th:fragment="fasciaMod(entita)">
+    <div class="nav-left">
+        <a th:href="@{/libri}">
+            <img th:src="@{/uploads/images/Bookshelf_Logo.png}" class="menu-icon" />
+        </a>
+    </div>
+
+    <div class="nav-right">
+
+        <!-- Solo per STAFF autenticato -->
+        <span class="staff" sec:authorize="hasRole('STAFF')">
+
+            <!-- Se siamo nella pagina libro -->
+            <a th:if="${entita instanceof T(it.uniroma3.siwpersonale.model.Libro)}"
+                th:href="@{/libroModifica/{id}(id=${entita.id})}">MODIFICA</a>
+
+            <!-- Se siamo nella pagina autore -->
+            <a th:if="${entita instanceof T(it.uniroma3.siwpersonale.model.Autore)}"
+                th:href="@{/autoreModifica/{id}(id=${entita.id})}">MODIFICA</a>
+
+        </span>
+
+        <a th:href="@{/libri}">Libri</a>
+        <a th:href="@{/autori}">Autori</a>
+
+        <img th:src="@{/uploads/images/tastoProfilo.webp}" alt="Apri menu" id="menu-toggle" onclick="toggleSidebar()"
+            class="menu-icon-profilo" />
+
+        <div id="sidebar" th:class="sidebar">
+            <span sec:authorize="isAuthenticated()">
+                <a th:href="@{/utente}">Profilo</a>
+                <a th:href="@{/impostazioni}">Impostazioni</a>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit">Logout</button>
+                </form>
+            </span>
+            <span sec:authorize="isAnonymous()">
+                <a th:href="@{/login}" class="login">Login</a>
+            </span>
+        </div>
+    </div>
+</nav>

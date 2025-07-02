@@ -1,0 +1,41 @@
+<nav class="fascia" th:fragment="fasciaLog">
+    <div class="nav-left">
+        <a th:href="@{/libri}">
+            <img th:src="@{/uploads/images/Bookshelf_Logo.png}" class="menu-icon" />
+        </a>
+    </div>
+
+    <div class="nav-right">
+
+        <!-- Solo per STAFF autenticato -->
+        <span class="staff" sec:authorize="hasRole('STAFF')">
+
+            <a th:if="${requestURI == '/libri'}" th:href="@{/libroNuovo}">+LOG</a>
+            <a th:if="${requestURI == '/autori'}" th:href="@{/autoreNuovo}">+LOG</a>
+
+        </span>
+
+        <img th:src="@{/uploads/images/Lente.png}" alt="Cerca" class="search-icon" onclick="toggleSearch()" />
+        <a th:href="@{/libri}">Libri</a>
+        <a th:href="@{/autori}">Autori</a>
+
+        <img th:src="@{/uploads/images/tastoProfilo.webp}" alt="Apri menu" id="menu-toggle" onclick="toggleSidebar()"
+            class="menu-icon-profilo" />
+
+        <div id="sidebar" th:class="sidebar">
+
+            <span sec:authorize="isAuthenticated()">
+                <a th:href="@{/utente}">Profilo</a>
+                <a th:href="@{/impostazioni}">Impostazioni</a>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit">Logout</button>
+                </form>
+            </span>
+
+            <span sec:authorize="isAnonymous()">
+                <a th:href="@{/login}" class="login">Login</a>
+            </span>
+
+        </div>
+    </div>
+</nav>

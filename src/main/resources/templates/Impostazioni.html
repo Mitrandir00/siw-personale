@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Impostazioni</title>
+         <link rel="stylesheet" th:href="@{/css/Registrazione.css}"/>
+    </head>
+
+    <body>
+        <h2>IMPOSTAZIONI</h2>
+        <form th:action="@{/impostazioni/{utente}(utente=${utente.id})}" method="post" class="form-registrazione">
+
+            <label for="nomeUtente">Nome utente:</label>
+            <input type="text" id="nomeUtente" name="nomeUtente" th:value="${utente.nomeUtente}" required class="input-stile"><br><br>
+
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" th:value="${utente.nome}" required class="input-stile"><br><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" th:value="${utente.password}" required class="input-stile"><br><br>
+
+            <label for="passwordBis">Conferma Password:</label>
+            <input type="password" id="passwordBis" name="passwordBis" required class="input-stile"><br><br>
+
+            <label for="codiceAmministratore">Codice Amministratore (se non lo hai puoi lasciare in bianco):</label>
+            <input type="text" id="codiceAmministratore" name="codiceAmministratore" class="input-stile"><br><br>
+
+            <button type="submit" class="btn-invio">Registrati</button>
+        </form>
+    </body>
+</html>

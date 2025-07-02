@@ -1,0 +1,100 @@
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5vw;
+}
+
+/* Titolo principale */
+h1 {
+    color: #333;
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 1vw 2vw;
+    border-radius: 1vw;
+    backdrop-filter: blur(0.5vw);
+    -webkit-backdrop-filter: blur(0.5vw);
+    box-shadow: 0 0.5vw 2vw rgba(255, 255, 255, 0.3);
+    font-size: 2.5vw;
+    text-align: center;
+}
+
+/* Form principale */
+form {
+    max-width: 35vw;
+    width: 100%;
+    padding: 2.5vw;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(0.8vw);
+    -webkit-backdrop-filter: blur(0.8vw);
+    border-radius: 2vw;
+    box-shadow: 0 0.8vw 2.5vw rgba(0, 0, 0, 0.4);
+    margin-top: 3vw;
+    font-size: 1vw;
+}
+
+/* Etichette */
+label {
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 0.5vw;
+    font-size: 1vw;
+}
+
+/* Campi di input e textarea */
+input[type="text"],
+input[type="number"],
+textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1vw 1.2vw;
+    margin-bottom: 2vw;
+    border: 0.1vw solid #ccc;
+    border-radius: 1.5vw;
+    background-color: rgba(255, 255, 255, 0.5);
+    font-size: 1vw;
+    outline: none;
+    transition: box-shadow 0.3s;
+}
+
+input:focus,
+textarea:focus {
+    box-shadow: 0 0 1vw #aaa;
+}
+
+/* Sezione pulsanti */
+.bottoni {
+    display: flex;
+    justify-content: space-between;
+    gap: 1vw;
+    margin-top: 1vw;
+}
+
+/* Pulsanti */
+.btn-invio {
+    flex: 1;
+    padding: 1vw;
+    border: none;
+    border-radius: 1.5vw;
+    background-color: #eda548;
+    color: white;
+    font-size: 1vw;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-invio:hover {
+    background-color: #ce892d;
+}
+
+.btn-annulla {
+    background-color: #999;
+}
+
+.btn-annulla:hover {
+    background-color: #777;
+}

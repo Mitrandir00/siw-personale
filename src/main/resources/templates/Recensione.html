@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Modifica Recensione</title>
+    <link rel="stylesheet" th:href="@{/css/Recensione.css}"/>
+</head>
+
+<body>
+    <h1>La tua recensione</h1>
+
+    <form th:action="@{/recensione/salva}" th:object="${recensione}" method="post">
+        <!-- ID nascosto per identificare la recensione -->
+        <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{libro}" />
+        <input type="hidden" th:field="*{autore}" />
+
+
+        <!-- Titolo -->
+        <label for="titolo">Titolo:</label>
+        <input type="text" id="titolo" th:field="*{titolo}" required />
+        <br><br>
+
+        <!-- Voto -->
+        <label for="voto">Voto:</label>
+        <input type="number" id="voto" min="1" max="5" th:field="*{voto}" />
+        <br><br>
+
+        <!-- Commento -->
+        <label for="commento">Commento:</label>
+        <textarea id="commento" th:field="*{commento}" rows="6" cols="40" required></textarea>
+        <br><br>
+
+         <div class="bottoni">
+             <button type="submit" class="btn-invio">Salva Modifiche</button>
+            <a th:href="@{/libro/{id} (id=${idLibro})}" class="btn-invio btn-annulla">Annulla</a>
+        </div>
+    </form>
+</body>
+
+</html>

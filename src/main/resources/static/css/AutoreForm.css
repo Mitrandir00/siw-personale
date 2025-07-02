@@ -1,0 +1,213 @@
+/* Base */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fafafa;
+    padding: 3vw 2vw;
+    color: #333;
+    margin: 0;
+}
+
+/* Titolo */
+h1 {
+    text-align: center;
+    color: #eda548;
+    font-size: 3vw;
+    margin-bottom: 4vw;
+    font-weight: 700;
+    letter-spacing: 0.3vw;
+}
+
+/* Form container */
+form {
+    max-width: 40vw;
+    background-color: white;
+    padding: 3vw 4vw;
+    margin: 0 auto 3vw auto;
+    border-radius: 1vw;
+    box-shadow: 0 0.8vw 2vw rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
+}
+
+/* Label */
+label {
+    font-weight: 600;
+    font-size: 1.3vw;
+    color: #555;
+}
+
+/* Input e textarea */
+input[type="text"],
+input[type="date"],
+textarea,
+input[type="file"] {
+    width: 100%;
+    padding: 1vw 1.5vw;
+    font-size: 1.2vw;
+    border: 0.15vw solid #eda548;
+    border-radius: 0.7vw;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+    font-family: inherit;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+textarea:focus,
+input[type="file"]:focus {
+    outline: none;
+    border-color: #b87400;
+}
+
+/* Textarea */
+textarea {
+    resize: vertical;
+}
+
+/* Immagine profilo */
+.profilo {
+    width: 18vw;
+    height: auto;
+    margin-top: 1vw;
+    border-radius: 0.8vw;
+    box-shadow: 0 0.4vw 1vw rgba(0, 0, 0, 0.1);
+}
+
+/* Contenitore bottoni salva e annulla */
+.salvaAnnulla {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2vw;
+}
+
+/* Bottone salva */
+.salvaAnnulla button[type="submit"] {
+    background-color: #eda548;
+    color: white;
+    font-weight: 700;
+    font-size: 1.5vw;
+    padding: 1.3vw 3vw;
+    border: none;
+    border-radius: 1vw;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.salvaAnnulla button[type="submit"]:hover {
+    background-color: #b87400;
+}
+
+/* Bottone annulla come link */
+.salvaAnnulla .button-annulla {
+    background-color: #ddd;
+    color: #333;
+    font-weight: 600;
+    font-size: 1.3vw;
+    padding: 1.2vw 2.5vw;
+    border-radius: 1vw;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.salvaAnnulla .button-annulla:hover {
+    background-color: #bbb;
+}
+
+/* Bottone elimina */
+form>button[type="submit"][style*="color:red"] {
+    background-color: #d9534f;
+    color: white;
+    font-weight: 700;
+    font-size: 1.4vw;
+    padding: 1vw 3vw;
+    border: none;
+    border-radius: 1vw;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 0 auto;
+    display: block;
+    margin-top: 1.5vw;
+}
+
+form>button[type="submit"][style*="color:red"]:hover {
+    background-color: #b52b27;
+}
+
+.btn-elimina {
+    background-color: #c0392b;
+    color: white;
+    padding: 1vw 2.5vw;
+    font-size: 1.2vw;
+    border: none;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    margin: 0;
+    display: block;
+    transition: background-color 0.3s ease;
+    outline: none;
+    /* <- aggiunto per rimuovere il riquadro */
+    box-shadow: none;
+    /* <- opzionale: elimina eventuali ombre al focus */
+}
+
+.btn-elimina:hover {
+    background-color: #962d22;
+}
+
+.btn-elimina:focus {
+    outline: none;
+    /* <- evita riquadro anche al focus */
+    box-shadow: none;
+    /* <- se il browser ne applicava uno */
+}
+
+.form-elimina {
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    margin-top: 2vw;
+    display: flex;
+    justify-content: center;
+}
+
+
+/* Responsive */
+@media (max-width: 650px) {
+    .form-registrazione {
+        padding: 2vw 2.5vw;
+        width: 90vw;
+    }
+
+    .copertine img {
+        width: 7vw;
+        height: 10vw;
+    }
+
+    h1 {
+        font-size: 5vw;
+    }
+}
+
+.copertine-container {
+    margin-bottom: 2vw;
+}
+
+.copertine {
+    display: inline-block;
+    margin-right: 1vw;
+    margin-bottom: 1vw;
+}
+
+.copertine img {
+    width: 9vw;
+    height: 13vw;
+    object-fit: cover;
+    border-radius: 0.4vw;
+    box-shadow: 0 0.1vw 0.4vw rgba(0, 0, 0, 0.15);
+    border: 0.1vw solid #ddd;
+}

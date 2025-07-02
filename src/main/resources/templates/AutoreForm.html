@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${autore.id != null} ? 'Modifica Autore' : 'Crea Autore'">Autore</title>
+    <link rel="stylesheet" th:href="@{/css/AutoreForm.css}">
+</head>
+
+<body>
+
+    <h1 th:text="${autore.id != null} ? 'Modifica Autore' : 'Crea Nuovo Autore'"></h1>
+
+    <form th:action="@{/autore/salva}" th:object="${autore}" method="post" enctype="multipart/form-data">
+
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" th:field="*{nome}" required>
+        <div th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" style="color:red"></div>
+
+        <label for="cognome">Cognome:</label>
+        <input type="text" id="cognome" th:field="*{cognome}" required>
+        <div th:if="${#fields.hasErrors('cognome')}" th:errors="*{cognome}" style="color:red"></div>
+
+        <label for="dataNascita">Data di nascita:</label>
+        <input type="date" name="dataNascita" th:value="${#temporals.format(autore.dataNascita, 'yyyy-MM-dd')}" />
+        <div th:if="${#fields.hasErrors('dataNascita')}" th:errors="*{dataNascita}" style="color:red"></div>
+
+        <label for="dataMorte">Data di morte:</label>
+        <input type="date" name="dataMorte" th:value="${#temporals.format(autore.dataMorte, 'yyyy-MM-dd')}" />
+        <div th:if="${#fields.hasErrors('dataMorte')}" th:errors="*{dataMorte}" style="color:red"></div>
+
+        <label for="nazionalita">Nazionalità:</label>
+        <input type="text" id="nazionalita" th:field="*{nazionalita}">
+        <div th:if="${#fields.hasErrors('nazionalita')}" th:errors="*{nazionalita}" style="color:red"></div>
+
+        <label for="biografia">Biografia:</label>
+        <textarea id="biografia" th:field="*{biografia}" rows="6"></textarea>
+        <div th:if="${#fields.hasErrors('biografia')}" th:errors="*{biografia}" style="color:red"></div>
+
+        <label for="immagine">Foto autore:</label>
+        <input type="file" id="immagine" name="immagine" accept="image/*">
+        <div th:if="${autore.urlImage != null}">
+            <img th:src="@{'/uploads/' + ${autore.urlImage}}" class="profilo" alt="Foto autore" />
+        </div>
+
+        <!-- Mantieni ID e immagine corrente in modifica -->
+        <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{urlImage}" />
+
+        <div class="salvaAnnulla">
+            <button type="submit">Salva Autore</button>
+            <a th:href="@{/autori}" class="button-annulla">Annulla</a>
+        </div>
+    </form>
+
+   <!-- Mostra il pulsante elimina solo se è una modifica -->
+    <div th:if="${autore.id != null}">
+        <form th:action="@{'/autoreCancella/' + ${autore.id}}" method="post"
+            onsubmit="return confirm('Sei sicuro di voler eliminare questo autore?');" class="form-elimina">
+            <button type="submit" class="btn-elimina">Elimina Autore</button>
+        </form>
+    </div>
+
+    <div th:if="${errore}" style="color:red;">
+        <p th:text="${errore}"></p>
+    </div>
+
+</body>
+
+</html>

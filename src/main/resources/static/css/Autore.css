@@ -1,0 +1,356 @@
+.fascia {
+  display: flex;
+
+  position: fixed;
+  /* barra fissa */
+  top: 0;
+  /* in cima */
+  left: 0;
+  right: 0;
+  height: 4vw;
+  /* altezza barra */
+  background-color: #ffffff;
+  /* sfondo bianco */
+  color: black;
+  /* testo nero (prima era white, ma sfondo è bianco) */
+  padding: 0;
+  /* padding orizzontale */
+  z-index: 9;
+  /* sopra altri elementi */
+  box-sizing: border-box;
+}
+
+.staff {
+  display: inline-block;
+  padding: 0.3vw 0.8vw;
+  border: solid #eda548;
+  /* o un colore che si adatti al tuo tema */
+  border-radius: 0.5vw;
+  background-color: rgba(255, 255, 255, 0.1);
+  /* leggermente trasparente */
+  color: #eda548;
+  font-weight: bold;
+  font-size: 1vw;
+}
+
+.nav-right {
+  position: absolute;
+  right: 2vw;
+}
+
+.nav-right>a,
+.staff>a {
+  font-size: 1.5vw;
+}
+
+.nav-right>a,
+.nav-right>img,
+.staff>a {
+  display: flex;
+  align-items: center;
+  padding: 0.3vw;
+  margin-left: 6vw;
+  /* distanza tra elementi */
+  border-radius: 8px;
+  /* angoli arrotondati */
+  background-color: transparent;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  user-select: none;
+}
+
+.nav-right>*:first-child a,
+.nav-right>a:first-child {
+  margin-left: 0 !important;
+}
+
+/* Hover: inverti colori */
+.nav-right>a:hover,
+.nav-right>img:hover,
+.staff>a:hover {
+  background-color: white;
+  color: #eda548;
+}
+
+/* Per evitare che il contenuto della pagina venga nascosto sotto la barra */
+body {
+  padding-top: 60px;
+  background-color: #ffffff;
+  /* stesso valore dell'altezza di .fascia */
+  padding-left: 24.5vw;
+  padding-right: 24.5vw;
+}
+
+.menu-icon {
+  position: absolute;
+  width: 18vw;
+  left: 1.8vw;
+  top: -4vw;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+.menu-icon-profilo {
+  width: 3vw;
+  height: auto;
+}
+
+/* Fascia già fissa in alto come da tuo codice */
+
+.search-icon {
+  width: 2vw;
+  height: 2vw;
+  cursor: pointer;
+}
+
+.search-container {
+  position: fixed;
+  top: 4vw;
+  /* subito sotto la fascia */
+  left: 45vw;
+  /* stesso padding sinistro del body */
+  right: 35vw;
+  /* stesso padding destro del body */
+  padding: 0.35vw 0.7vw;
+  background-color: white;
+  border: 0.2vw solid #ccc;
+  border-radius: 0.3vw;
+  box-sizing: border-box;
+  font-size: 1vw;
+
+  /* NASCOSTA di base: spostata sopra la fascia */
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 8;
+}
+
+.search-container.active {
+  /* VISIBILE: torna a posizione naturale subito sotto la fascia */
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Stile dell’input vero e proprio */
+.search-container input[type="text"] {
+  width: 100%;
+  padding: 0.35vw 0.7vw;
+  font-size: 1vw;
+  border: 0.2vw solid #ccc;
+  border-radius: 0.3vw;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+.nav-right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Stili comuni a tutte le sidebar */
+[id="sidebar"] {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  /* nascosta */
+  width: 250px;
+  height: 100%;
+  background-color: #eda548;
+  color: rgb(255, 255, 255);
+  padding: 20px;
+  transition: right 0.3s ease;
+  z-index: 2000;
+  /* sopra la barra fascia */
+}
+
+[id="sidebar"].show {
+  right: 0;
+  /* visibile */
+}
+
+[id="sidebar"] a {
+  display: block;
+  margin: 10px 0;
+  color: white;
+  text-decoration: none;
+  font-size: 1.2vw;
+}
+
+[id="sidebar"] button {
+  position: relative;
+  top: 35vw;
+  display: fixed;
+  margin: 10px 0;
+  background-color: #d9534f;
+  color: white;
+  text-decoration: none;
+  border: none;
+  border-radius: 1.2vw;
+  padding: 0.5vw 1.5vw;
+  font-size: 1.2vw;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+[id="sidebar"] button:hover {
+    background-color: #b52b27;
+}
+
+[id="sidebar"] .login {
+  display: inline-block;
+  background-color: #5cb85c; /* verde */
+  color: white;
+  text-decoration: none;
+  border: none;
+  border-radius: 1.1vw;
+  padding: 0.5vw 1.5vw;
+  font-size: 1.2vw;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+[id="sidebar"] .login:hover {
+  background-color: #449d44; /* verde scuro */
+}
+
+
+
+.bottone {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  /* opzionale, per centrare verticalmente */
+}
+
+.bottone a {
+  position: relative;
+  top: 1.5vw;
+  background-size: contain;
+  font-size: 1.1vw;
+  background-color: rgba(79, 129, 179, 0.8);
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 0.5vw 1vw;
+  border-radius: 0.5vw;
+  /* angoli arrotondati */
+  display: inline-block;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+  /* ombra leggera */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bottone a:hover {
+  background-color: rgba(61, 109, 157, 0.8);
+  /* verde più scuro */
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+  /* ombra più intensa al passaggio */
+}
+
+/* Nuovo stile autore */
+
+.autore {
+  display: flex;
+  align-items: flex-start;
+  /* Allinea immagine e contenuto in alto */
+  gap: 2vw;
+  /* Spazio tra immagine e testo */
+  padding-top: 70px;
+  padding-left: 0;
+  font-size: 1vw;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.autore img {
+  border-radius: 10px;
+  width: 18vw;
+  height: auto;
+  object-fit: cover;
+}
+
+.autore-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  line-height: 1.4;
+  max-width: 60vw;
+}
+
+.nome h1 {
+  font-size: 2.5vw;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.autore-info>div:not(.nome),
+.autore-info>p {
+  margin-top: 0.5vw;
+  font-size: 1.2vw;
+}
+
+.autore-info p {
+  margin: 0.5vw 0 0 0;
+}
+
+.autore-info span {
+  font-weight: bold;
+}
+
+/* Lista libri */
+
+.libri ul {
+  display: flex;
+  flex-wrap: wrap;
+  /* per andare a capo se serve */
+  gap: 2vw;
+  /* spazio tra i libri */
+  padding: 0;
+  list-style: none;
+  justify-content: flex-start;
+  /* distribuisce uniformemente */
+  width: 100%;
+  /* occupa tutto lo spazio disponibile */
+  box-sizing: border-box;
+  /* include il padding nel calcolo della larghezza */
+}
+
+.libri ul li {
+  flex: 0 0 calc((100%) / 6);
+  /* ← 6 elementi per riga */
+  min-width: 0;
+  /* ← se vuoi forzare le 6 colonne */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.libri ul li img {
+  width: 9.5vw;
+  /* dimensione immagine */
+  height: 31.7vh;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-bottom: 8px;
+}
+
+.libri a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+}
+
+.libri ul li a:hover {
+  text-decoration: underline;
+}

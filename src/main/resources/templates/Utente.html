@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Profilo</title>
+    <link rel="stylesheet" th:href="@{/css/Utente.css}">
+</head>
+
+<body>
+    
+    <div th:replace="~{fragments/fasciaMod :: fasciaMod(${utente})}"></div>
+
+    <script th:src="@{/js/Sidebar.js}"></script>
+
+    <hr>
+
+    <div class="info-utente">
+        <h1>Ben tornat* "<span th:text="${utente.nome}">nome</span>"</h1>
+        <br><br>
+    </div>
+
+    <h2>Libri letti:</h2>
+    <div class="libri">
+        <div th:if="${utente.libriLetti != null}">
+            <ul>
+                <li th:each="libro : ${utente.libriLetti}">
+                    <div>
+                        <a th:href="@{/libro/{id} (id=${libro.id})}">
+                            <img th:src="@{${'/uploads/' + libro.urlImage[0]}}" alt="Copertina libro" />
+                        </a>
+                    </div>
+                    <a th:href="@{/libro/{id}(id=${libro.id})}"
+                        th:text="${libro.titolo}">titolo</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div th:if="${utente.libriLetti == null or #lists.isEmpty(utente.libriLetti)}">
+        <h3>Non hai letto ancora nessun libro</h3>
+    </div>
+
+    <br><br>
+
+    <div class="recensioni">
+        <h2>Le tue recensioni:</h2>
+        <hr>
+        <div th:each="recensione : ${utente.recensioni}">
+            <form class="recensione"
+                th:action="@{/cancellaRecensione/{recensione} (recensione=${recensione.id})}"
+                method="post">
+
+                <div class="contenuto-recensione">
+                    <div class="testo-recensione">
+                        <p>
+                            <a th:href="@{/recensione/modifica/{id}(id=${recensione.id})}"
+                                th:text="${recensione.titolo}">Titolo Recensione</a>
+                        </p>
+                        <div class="stelle">
+                            <span th:each="i : ${#numbers.sequence(1, 5)}"
+                                th:classappend="${i <= recensione.voto} ? 'stella piena' : 'stella vuota'">★</span>
+                        </div>
+                        <p th:text="${recensione.commento}">commento</p>
+                        <p>Di <span th:text="${recensione.autore.nome}"></span></p>
+                    </div>
+
+                    <button type="submit" class="btn-elimina">
+                        <img th:src="@{/uploads/images/croce.png}" alt="Elimina">
+                    </button>
+                </div>
+
+                <hr>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

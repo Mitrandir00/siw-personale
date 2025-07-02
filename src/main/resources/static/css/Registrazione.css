@@ -1,0 +1,91 @@
+.form-registrazione {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 8px 25px rgb(74, 73, 73);
+
+    font-family: sans-serif;
+}
+
+.input-stile {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 12px 15px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.5);
+    font-size: 16px;
+    outline: none;
+    transition: box-shadow 0.3s;
+}
+
+.input-stile:focus {
+    box-shadow: 0 0 10px #aaa;
+}
+
+.btn-invio {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 15px;
+    background-color: #eda548;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-invio:hover {
+    background-color: #ce892d;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url("/uploads/images/SfondoLogin.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.bottoni {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2vw; /* distanza tra i bottoni */
+    margin-top: 2vw;
+}
+
+.btn-annulla {
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border-radius: 15px;
+    background-color: #999;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: none; /* per uniformità con button */
+}
+
+
+.btn-annulla:hover {
+    background-color: #777;
+}

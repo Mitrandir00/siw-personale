@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title th:text="${autore.cognome}">Autore</title>
+    <link rel="stylesheet" th:href="@{/css/Autore.css}" />
+</head>
+
+<body>
+
+    <div th:replace="~{fragments/fasciaMod :: fasciaMod(${autore})}"></div>
+
+    <script th:src="@{/js/Sidebar.js}"></script>
+    <hr>
+    <div th:if="${autore != null}">
+        <div class="autore" style="display: flex; gap: 20px; align-items: flex-start;">
+            <span>
+                <img th:src="@{${'/uploads/' + autore.urlImage}}" alt="Foto autore"
+                    style="max-width: 200px; border-radius: 8px;" />
+            </span>
+            <div class="autore-info">
+                <div class="nome">
+                    <h1 th:text="|${autore.nome} ${autore.cognome}|">Nome Cognome</h1>
+                </div>
+                <div th:text="|${autore.dataNascita} - ${autore.dataMorte != null ? autore.dataMorte : ''}|">
+                    0000 - 0000
+                </div>
+                <p>Nazionalità: <span th:text="${autore.nazionalita}">Nazionalità</span></p>
+                <p><strong>Biografia:</strong></p>
+                <p th:text="${autore.biografia}">Biografia autore qui</p>
+            </div>
+        </div>
+        <div class="libri">
+            <br>
+            <h2>Opere:</h2>
+            <hr>
+            <div th:if="${autore.libri != null}">
+                <ul>
+                    <li th:each="libro : ${autore.libri}">
+                        <div>
+                            <a th:href="@{/libro/{id} (id=${libro.id})}">
+                                <img th:src="@{${'/uploads/' + libro.urlImage[0]}}" alt="Copertina libro" />
+                            </a>
+                        </div>
+                        <a th:href="@{/libro/{id}(id=${libro.id})}" th:text="${libro.titolo}">titolo</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${autore == null}">Questo autore non esiste</div>
+</body>
+
+</html>

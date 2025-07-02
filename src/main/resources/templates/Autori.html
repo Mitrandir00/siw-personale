@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Lista Autori</title>
+    <link rel="stylesheet" th:href="@{/css/Autori.css}" />
+</head>
+
+<body>
+
+    <div th:replace="~{fragments/fasciaLog :: fasciaLog}"></div>
+
+    <form id="search-form" th:action="@{/autori}" method="get" class="search-container"
+        onsubmit="return submitSearch()">
+        <input type="text" id="search-bar" name="query" class="search-bar" placeholder="Cerca libri..." />
+    </form>
+
+    <script th:src="@{/js/Sidebar.js}"></script>
+    <hr>
+
+    <h1>Autori</h1>
+    <div class="container1">
+        <ul>
+            <li th:each="autore : ${autori}">
+                <div>
+                    <a th:href="@{/autore/{id}(id=${autore.id})}">
+                        <img th:src="@{${'/uploads/' + autore.urlImage}}" alt="Copertina libro" />
+                    </a>
+                </div>
+                <a th:href="@{/autore/{id}(id=${autore.id})}" th:text="${autore.nome + ' ' + autore.cognome}">Nome
+                    Cognome</a>
+            </li>
+        </ul>
+        <div th:if="${autori == null}">Non ci sono autori nel sistema</div>
+    </div>
+</body>
+
+</html>
