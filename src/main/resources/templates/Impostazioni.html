@@ -21,20 +21,19 @@
             <input type="email" id="email" th:field="*{email}" required>
 
             <label for="password">Nuova Password:</label>
-            <input type="password" id="password" th:field="*{password}">
+            <input type="password" id="password" th:field="*{password}"
+                placeholder="Lascia vuoto se non vuoi cambiarla">
 
             <label for="passwordBis">Conferma Password:</label>
             <input type="password" id="passwordBis" th:field="*{passwordBis}">
 
-            <label for="ruolo">Ruolo:</label>
+            <!--<label for="ruolo">Ruolo:</label>
             <select id="ruolo" th:field="*{ruolo}">
-                <option th:value="UTENTE" th:text="'Utente'"
-                    th:selected="${utente.ruolo == T(it.uniroma3.siwpersonale.model.Utente.Ruolo).UTENTE}"></option>
-                <option th:value="STAFF" th:text="'Staff'"
-                    th:selected="${utente.ruolo == T(it.uniroma3.siwpersonale.model.Utente.Ruolo).STAFF}"></option>
-            </select>
+                <option th:each="r : ${ruoli}" th:value="${r}" th:text="${r}"></option>
+            </select>-->
 
             <button type="submit">Salva Modifiche</button>
+            <a th:href="@{/utente}" class="button-annulla">Annulla</a>
         </form>
 
         <hr>
@@ -54,3 +53,4 @@
 </body>
 
 </html>
+F

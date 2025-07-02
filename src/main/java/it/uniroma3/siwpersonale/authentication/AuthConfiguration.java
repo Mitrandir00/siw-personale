@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import it.uniroma3.siwpersonale.service.CustomOAuth2UserService;
 import it.uniroma3.siwpersonale.service.CustomUserDetailsService;
 
 @Configuration
@@ -34,13 +35,13 @@ public class AuthConfiguration {
                                                                 "/recensioneNuovo/**", "/js/**",
                                                                 "/css/**", "/images/**", "/uploads/images/**", "/error",
                                                                 "/registrazione",
-                                                                "/utente/**", "/impostazioni/**")
+                                                                "/utente/**", "/impostazioni", "/impostazioni/**")
                                                 .permitAll()
 
                                                 .requestMatchers(HttpMethod.HEAD, "/uploads/images/**").permitAll()
 
                                                 .requestMatchers(HttpMethod.POST, "/login", "/registrazione",
-                                                                "/recensione/salva")
+                                                                "/recensione/salva","/utente/modifica")
                                                 .permitAll()
 
                                                 .requestMatchers(HttpMethod.POST, "/cancellaRecensione/**")

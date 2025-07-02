@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
 import it.uniroma3.siwpersonale.model.Libro;
 import it.uniroma3.siwpersonale.model.Utente;
 import it.uniroma3.siwpersonale.repository.UtenteRepository;
@@ -24,7 +25,6 @@ import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -126,12 +126,6 @@ public class UtenteController {
         return "Utente";
     }
 
-    @GetMapping("/impostazioni/{utente}")
-    public String getImpostazioni(@PathVariable("utente") Long id, Model model) {
-        model.addAttribute("utente", this.utenteService.getUtenteById(id));
-        return "Impostazioni";
-    }
-
     @PostMapping("/impostazioni/{utente}")
     public String impostazioni(@RequestParam String email,
             @RequestParam String nome,
@@ -158,9 +152,33 @@ public class UtenteController {
     }
 
     @GetMapping("/impostazioni")
-    public String getImpostazioniProfilo(Model model, @AuthenticationPrincipal Utente utente) {
+    public String getImpostazioniProfilo(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Utente utente = null;
+
+        if (authentication != null && authentication.isAuthenticated() &&
+                !(authentication.getPrincipal() instanceof String
+                        && authentication.getPrincipal().equals("anonymousUser"))) {
+
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String usernameOrEmail = userDetails.getUsername();
+
+            // Provo prima con email
+            utente = utenteService.getUtenteByEmail(usernameOrEmail);
+
+            // Se null, provo con nome
+            if (utente == null) {
+                utente = utenteService.getUtenteByNome(usernameOrEmail);
+            }
+        }
+
+        if (utente == null) {
+            return "redirect:/login";
+        }
+
         model.addAttribute("utente", utente);
         model.addAttribute("ruoli", Utente.Ruolo.values());
+
         return "Impostazioni";
     }
 

@@ -1,7 +1,13 @@
 package it.uniroma3.siwpersonale.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -17,22 +23,30 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Transient;
 
 @Entity
-public class Utente {
+public class Utente implements UserDetails {
 
     public static final Ruolo DEFAULT_ROLE = Utente.Ruolo.UTENTE;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String nome;
+
     @Column(unique = true, nullable = false)
     private String email;
+
     private String password;
+
     @Transient
-	private String passwordBis;
+    private String passwordBis;
+
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<Libro> libriLetti = new ArrayList<Libro>();
+    private List<Libro> libriLetti = new ArrayList<>();
+
     @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, mappedBy = "autore")
-    private List<Recensione> recensioni = new ArrayList<Recensione>();
+    private List<Recensione> recensioni = new ArrayList<>();
+
     @Enumerated(EnumType.STRING)
     private Ruolo ruolo;
 
@@ -41,9 +55,10 @@ public class Utente {
     }
 
     public Utente() {
-        this.ruolo = Ruolo.UTENTE;  // assegna sempre UTENTE come default
+        this.ruolo = Ruolo.UTENTE;
     }
 
+    // Getters & Setters
     public void setId(Long id) {
         this.id = id;
     }
@@ -60,18 +75,19 @@ public class Utente {
         return this.nome;
     }
 
-    public void setRuolo(Ruolo f) {
-        this.ruolo = f;
+    public void setRuolo(Ruolo ruolo) {
+        this.ruolo = ruolo;
     }
 
     public Ruolo getRuolo() {
         return this.ruolo;
     }
 
-    public void setPassword(String psw) {
-        this.password = psw;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
+    @Override
     public String getPassword() {
         return this.password;
     }
@@ -84,20 +100,16 @@ public class Utente {
         this.libriLetti.add(libro);
     }
 
-    public void setLibriLetti(List<Libro> libro) {
-        this.libriLetti = libro;
+    public void setLibriLetti(List<Libro> libri) {
+        this.libriLetti = libri;
     }
 
     public boolean hasLibro(Long id) {
-        for (Libro libro : this.libriLetti) {
-            if (libro.getId() == id)
-                return true;
-        }
-        return false;
+        return this.libriLetti.stream().anyMatch(l -> l.getId().equals(id));
     }
 
     public void cancellaLibro(Long id) {
-        libriLetti.removeIf(libro -> libro.getId().equals(id));
+        this.libriLetti.removeIf(l -> l.getId().equals(id));
     }
 
     public void setRecensione(Recensione rec) {
@@ -109,15 +121,16 @@ public class Utente {
     }
 
     public boolean haveRecensione(Long id) {
-        for (Recensione recensione : this.recensioni) {
-            if (recensione.getId() == id)
-                return true;
-        }
-        return false;
+        return this.recensioni.stream().anyMatch(r -> r.getId().equals(id));
     }
 
     public String getEmail() {
         return email;
+    }
+
+    @Override
+    public String getUsername() {
+        return email; // Spring Security usa questo come identificativo
     }
 
     public void setEmail(String email) {
@@ -125,11 +138,37 @@ public class Utente {
     }
 
     public String getPasswordBis() {
-		return passwordBis;
-	}
+        return passwordBis;
+    }
 
-	public void setPasswordBis(String passwordBis) {
-		this.passwordBis = passwordBis;
-	}
+    public void setPasswordBis(String passwordBis) {
+        this.passwordBis = passwordBis;
+    }
 
+    // === UserDetails Implementation ===
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + this.ruolo.name()));
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
