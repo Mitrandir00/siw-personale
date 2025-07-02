@@ -51,9 +51,3 @@ Di seguito sono descritti almeno 4 **casi d'uso** richiesti dal progetto.
 - **Rotta:** `/autore/{id}`
 - **Entità coinvolte:** `Autore`, `Libro`
 
----
-
-## ℹ️ Note
-- L'autenticazione e la registrazione dell'utente **non sono considerati** casi d'uso secondo il regolamento.
-- Tutti i form sono protetti da CSRF token.
-- I dati iniziali vengono caricati da `import.sql`.
