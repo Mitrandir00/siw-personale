@@ -213,7 +213,7 @@ public class UtenteController {
         }
         utenteLoggato.setPassword(modificato.getPassword());
         utenteLoggato.setPasswordBis(modificato.getPasswordBis());
-
+        utenteLoggato.setrecensioni(modificato.getRecensioni());
         utenteService.addUtente(utenteLoggato);
         return "Utente";
     }

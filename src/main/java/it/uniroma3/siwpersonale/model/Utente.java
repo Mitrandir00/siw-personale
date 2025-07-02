@@ -116,6 +116,10 @@ public class Utente implements UserDetails {
         this.recensioni.add(rec);
     }
 
+    public void setrecensioni(List<Recensione> rec) {
+        this.recensioni = rec;
+    }
+
     public List<Recensione> getRecensioni() {
         return this.recensioni;
     }
