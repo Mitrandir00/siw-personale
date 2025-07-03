@@ -25,6 +25,16 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         String email = (String) attributes.get("email");
         String nome = (String) attributes.get("given_name");
+        System.out.println(">> CustomOAuth2UserService.loadUser() invocato - EMAIL: " + email);
+
+
+        if (nome == null) {
+            nome = (String) attributes.get("name"); // fallback
+        }
+
+        if (email == null || nome == null) {
+            throw new IllegalArgumentException("Errore nel recupero dati utente da Google.");
+        }
 
         Utente utente = utenteRepository.findByEmail(email);
 
@@ -32,8 +42,14 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             utente = new Utente();
             utente.setNome(nome);
             utente.setEmail(email);
-            utente.setRuolo(Utente.DEFAULT_ROLE);
+            utente.setRuolo(Utente.Ruolo.UTENTE);
             utenteRepository.save(utente);
+        } else {
+            // opzionale: aggiorna nome se diverso
+            if (!nome.equals(utente.getNome())) {
+                utente.setNome(nome);
+                utenteRepository.save(utente);
+            }
         }
 
         return new CustomOAuth2User(oAuth2User, utente);

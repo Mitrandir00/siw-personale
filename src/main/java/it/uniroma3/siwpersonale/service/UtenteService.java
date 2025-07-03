@@ -1,10 +1,13 @@
 package it.uniroma3.siwpersonale.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.uniroma3.siwpersonale.model.Utente;
 import it.uniroma3.siwpersonale.repository.UtenteRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class UtenteService {
@@ -16,7 +19,7 @@ public class UtenteService {
         return utenteRepository.findById(id).get();
     }
 
-     public Utente getUtenteByEmail(String Email) {
+    public Utente getUtenteByEmail(String Email) {
         return utenteRepository.findByEmail(Email);
     }
 
@@ -41,11 +44,32 @@ public class UtenteService {
         utenteRepository.deleteById(id);
     }
 
-    public boolean isAmministartore (String codice) {
+    public boolean isAmministartore(String codice) {
         return codice.equals("Panino_con_pomodori");
     }
 
-    public void addUtente (Utente utente) {
+    public void addUtente(Utente utente) {
         this.utenteRepository.save(utente);
     }
+
+    @Transactional
+    public Utente getUtenteCompletoByEmail(String email) {
+        Utente utenteConLibri = this.utenteRepository.findUtenteWithLibriLetti(email);
+        if (utenteConLibri != null) {
+            Utente utenteConRecensioni = this.utenteRepository.findUtenteWithRecensioni(email);
+            utenteConLibri.setrecensioni(new ArrayList<>(utenteConRecensioni.getRecensioni()));
+        }
+        return utenteConLibri;
+    }
+
+    @Transactional
+    public Utente getUtenteCompletoByNome(String nome) {
+        Utente utenteConLibri = this.utenteRepository.findUtenteWithLibriLettiByNome(nome);
+        if (utenteConLibri != null) {
+            Utente utenteConRecensioni = this.utenteRepository.findUtenteWithRecensioniByNome(nome);
+            utenteConLibri.setrecensioni(utenteConRecensioni.getRecensioni());
+        }
+        return utenteConLibri;
+    }
+
 }

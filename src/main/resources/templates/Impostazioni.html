@@ -23,11 +23,11 @@
             <input type="email" id="email" th:field="*{email}" required>
 
             <label for="password">Nuova Password:</label>
-            <input type="password" id="password" th:field="*{password}"
-                placeholder="Lascia vuoto se non vuoi cambiarla"required>
+            <input type="password" id="password" th:field="*{password}" placeholder="Lascia vuoto se non vuoi cambiarla"
+                required>
 
             <label for="passwordBis">Conferma Password:</label>
-            <input type="password" id="passwordBis" th:field="*{passwordBis}"required>
+            <input type="password" id="passwordBis" th:field="*{passwordBis}" required>
 
             <label for="ruolo">Ruolo:</label>
             <select id="ruolo" th:field="*{ruolo}">
@@ -41,8 +41,9 @@
         <hr>
 
         <form th:action="@{/utente/cancella}" method="post"
-            onsubmit="return confirm('Sei sicuro di voler cancellare il tuo account? L\'operazione è irreversibile.')">
-            <button type="submit" class="btn-danger">Elimina Account</button>
+            onsubmit="return confirm('Sei sicuro di voler cancellare il tuo profilo?');">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+            <button type="submit" class="btn-danger">Cancella Profilo</button>
         </form>
 
         <div th:if="${errore}" style="color:red; margin-top: 1vw">

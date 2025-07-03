@@ -50,7 +50,7 @@
                     <p th:text="${libro.trama}">Descrizione del libro...</p>
                 </div>
             </div>
-            <div sec:authorize="hasAnyRole('UTENTE', 'STAFF')">
+            <div  th:if="${utente != null}">
                 <form class="tabella" th:action="@{/libro/{id}(id=${libro.id})}" method="post">
 
                     <div th:if="${utenteHaLibro == false}">

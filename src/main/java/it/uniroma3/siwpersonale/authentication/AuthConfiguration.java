@@ -20,38 +20,37 @@ public class AuthConfiguration {
         @Autowired
         private CustomUserDetailsService customUserDetailsService;
 
-        @Autowired
-        private CustomOAuth2UserService customOAuth2UserService;
-
         private static final String ROLE_STAFF = "ROLE_STAFF";
         private static final String ROLE_UTENTE = "ROLE_UTENTE";
 
         @Bean
-        SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 http
                                 .authorizeHttpRequests(authz -> authz
-                                                .requestMatchers(HttpMethod.GET, "/", "/index", "/login", "/autori",
-                                                                "/autore/**", "/libri", "/libro/**",
-                                                                "/recensioneNuovo/**", "/js/**",
-                                                                "/css/**", "/images/**", "/uploads/images/**", "/error",
-                                                                "/registrazione",
-                                                                "/utente/**", "/impostazioni", "/impostazioni/**")
+                                                .requestMatchers(HttpMethod.GET,
+                                                                "/", "/index", "/login", "/autori", "/autore/**",
+                                                                "/libri", "/libro/**", "/recensioneNuovo/**",
+                                                                "/js/**", "/css/**", "/images/**", "/uploads/images/**",
+                                                                "/error", "/registrazione", "/utente/**",
+                                                                "/impostazioni", "/impostazioni/**")
                                                 .permitAll()
 
                                                 .requestMatchers(HttpMethod.HEAD, "/uploads/images/**").permitAll()
 
-                                                .requestMatchers(HttpMethod.POST, "/login", "/registrazione",
-                                                                "/recensione/salva","/utente/modifica")
+                                                .requestMatchers(HttpMethod.POST,
+                                                                "/login", "/registrazione", "/recensione/salva",
+                                                                "/utente/modifica")
                                                 .permitAll()
 
                                                 .requestMatchers(HttpMethod.POST, "/cancellaRecensione/**")
                                                 .hasAuthority(ROLE_STAFF)
-                                                .requestMatchers("/autoreNuovo").hasAuthority(ROLE_STAFF)
-                                                .requestMatchers("/autoreModifica/**").hasAuthority(ROLE_STAFF)
-                                                .requestMatchers("/libroNuovo").hasAuthority(ROLE_STAFF)
-                                                .requestMatchers("/libroModifica/**").hasAuthority(ROLE_STAFF)
+
+                                                .requestMatchers("/autoreNuovo", "/autoreModifica/**",
+                                                                "/libroNuovo", "/libroModifica/**")
+                                                .hasAuthority(ROLE_STAFF)
 
                                                 .anyRequest().authenticated())
+
                                 .formLogin(form -> form
                                                 .loginPage("/login")
                                                 .usernameParameter("email")
@@ -59,11 +58,15 @@ public class AuthConfiguration {
                                                 .defaultSuccessUrl("/libri", true)
                                                 .failureUrl("/loginError")
                                                 .permitAll())
+
                                 .oauth2Login(oauth2 -> oauth2
                                                 .loginPage("/login")
                                                 .userInfoEndpoint(userInfo -> userInfo
-                                                                .userService(customOAuth2UserService))
-                                                .defaultSuccessUrl("/libri", true))
+                                                                .userService(customOAuth2UserServiceBean()))
+                                                .successHandler((request, response, authentication) -> {
+                                                        response.sendRedirect("/libri");
+                                                }))
+
                                 .logout(logout -> logout
                                                 .logoutUrl("/logout")
                                                 .logoutSuccessUrl("/login?logout")
@@ -75,12 +78,17 @@ public class AuthConfiguration {
         }
 
         @Bean
-        AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        public CustomOAuth2UserService customOAuth2UserServiceBean() {
+                return new CustomOAuth2UserService();
+        }
+
+        @Bean
+        public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
                 return authConfig.getAuthenticationManager();
         }
 
         @Bean
-        PasswordEncoder passwordEncoder() {
+        public PasswordEncoder passwordEncoder() {
                 return new BCryptPasswordEncoder();
         }
 }
