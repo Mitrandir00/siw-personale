@@ -20,7 +20,7 @@ import it.uniroma3.siwpersonale.service.UtenteService;
 import it.uniroma3.siwpersonale.util.AutenticazioneHelper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -40,6 +40,9 @@ public class UtenteController {
 
     @Autowired
     private AutenticazioneHelper autenticazioneHelper;
+
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
 
     @GetMapping("/")
     public String inizia() {
@@ -152,6 +155,7 @@ public class UtenteController {
         if (utenteLoggato == null)
             return "redirect:/login";
 
+        // Aggiorna i dati dell'utente
         utenteLoggato.setNome(modificato.getNome());
         utenteLoggato.setEmail(modificato.getEmail());
         utenteLoggato.setRuolo(modificato.getRuolo());
@@ -165,8 +169,18 @@ public class UtenteController {
         utenteLoggato.setPasswordBis(modificato.getPasswordBis());
         utenteLoggato.setrecensioni(modificato.getRecensioni());
 
+        // Salva l'utente nel DB
         utenteService.addUtente(utenteLoggato);
-        return "Utente";
+
+        // 🔄 Aggiorna il SecurityContext con i nuovi ruoli
+        UserDetails userDetails = userDetailsService.loadUserByUsername(utenteLoggato.getEmail());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                userDetails,
+                userDetails.getPassword(),
+                userDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        return "Utente"; // oppure "redirect:/profilo" se preferisci
     }
 
     @PostMapping("/utente/cancella")
